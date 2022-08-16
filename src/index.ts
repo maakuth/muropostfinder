@@ -1,5 +1,7 @@
 import { createDbWorker, WorkerHttpvfs } from "sql.js-httpvfs";
 
+const archivedBase = "http://web.archive.org/web/20220412011008/https://murobbs.muropaketti.com/";
+
 const workerUrl = new URL(
   "sql.js-httpvfs/dist/sqlite.worker.js",
   import.meta.url
@@ -27,7 +29,19 @@ async function loadWorker(): Promise<WorkerHttpvfs> {
 async function thread_from_postid(worker: Promise<WorkerHttpvfs>, postid: number) {
   const _worker = await worker
   const result = await _worker.db.query('select threadurl from muro where postid = ' + postid + ' limit 1');
-  document.body.textContent = JSON.stringify(result);
+  setResult(result as unknown as Array<{[key: string]: string}>);
+}
+
+function setResult(result: Array<{[key: string]: string}>): void {
+  const resultElement = document.getElementById("results");
+  const url = archiveUrl(result[0]["threadurl"] as String);
+  if (resultElement) {
+    resultElement.innerHTML = "<a href=\"" + url + "\">" + url + "</a>"
+  }
+}
+
+function archiveUrl(threadurl: String): String {
+  return archivedBase + threadurl;
 }
 
 let worker = loadWorker();
