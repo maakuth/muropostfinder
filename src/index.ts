@@ -26,15 +26,20 @@ async function loadWorker(): Promise<WorkerHttpvfs> {
   );
 }
 
-async function thread_from_postid(worker: Promise<WorkerHttpvfs>, postid: number) {
+async function thread_from_postid(worker: Promise<WorkerHttpvfs>, postid: number): Promise<String> {
   const _worker = await worker
-  const result = await _worker.db.query('select threadurl from muro where postid = ' + postid + ' limit 1');
-  setResult(result as unknown as Array<{[key: string]: string}>);
+  const result = await _worker.db.query('select threadurl from muro where postid = ' + postid + ' limit 1') as unknown as Array<{[key: string]: string}>;  
+  if (result.length == 0) { 
+    return "";
+  }
+  else {
+    return result[0]["threadurl"]
+  }
 }
 
-function setResult(result: Array<{[key: string]: string}>): void {
+function showResult(result: String): void {
   const resultElement = document.getElementById("results");
-  const url = archiveUrl(result[0]["threadurl"] as String);
+  const url = archiveUrl(result);
   if (resultElement) {
     resultElement.innerHTML = "<a href=\"" + url + "\">" + url + "</a>"
   }
@@ -48,7 +53,9 @@ let worker = loadWorker();
 document.addEventListener("DOMContentLoaded", (event: Event) => {
   document.getElementById("searchButton")?.addEventListener("click", (event: Event) => {
     const searchfield = document.getElementById("search") as HTMLTextAreaElement;
-    thread_from_postid(worker, parseInt(searchfield.value));
+    thread_from_postid(worker, parseInt(searchfield.value)).then((result) => {
+      showResult(result);
+    });
   });
 });
 
