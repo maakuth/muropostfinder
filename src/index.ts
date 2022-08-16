@@ -7,6 +7,7 @@ const workerUrl = new URL(
   import.meta.url
 );
 const wasmUrl = new URL("sql.js-httpvfs/dist/sql-wasm.wasm", import.meta.url);
+const postre = /(\d+)$/;
 
 async function loadWorker(): Promise<WorkerHttpvfs> {
   return createDbWorker(
@@ -53,9 +54,12 @@ let worker = loadWorker();
 document.addEventListener("DOMContentLoaded", (event: Event) => {
   document.getElementById("searchButton")?.addEventListener("click", (event: Event) => {
     const searchfield = document.getElementById("search") as HTMLTextAreaElement;
-    thread_from_postid(worker, parseInt(searchfield.value)).then((result) => {
-      showResult(result);
-    });
+    let post = postre.exec(searchfield.value)
+    if (post) {
+      thread_from_postid(worker, parseInt(post[0])).then((result) => {
+        if (result.length > 0) showResult(result);
+      });
+    }
   });
 });
 
