@@ -31,7 +31,10 @@ async function thread_from_postid(worker: Promise<WorkerHttpvfs>, postid: number
 }
 
 let worker = loadWorker();
-document.getElementById("searchButton")?.addEventListener("click", (event: Event) => {
-  const searchfield = document.getElementById("search") as HTMLTextAreaElement;
-  thread_from_postid(worker, parseInt(searchfield.value));
+document.addEventListener("DOMContentLoaded", (event: Event) => {
+  document.getElementById("searchButton")?.addEventListener("click", (event: Event) => {
+    const searchfield = document.getElementById("search") as HTMLTextAreaElement;
+    thread_from_postid(worker, parseInt(searchfield.value));
+  });
 });
+
