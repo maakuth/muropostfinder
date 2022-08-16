@@ -16,8 +16,8 @@ async function loadWorker(): Promise<WorkerHttpvfs> {
         from: "inline",
         config: {
           serverMode: "full",
-          url: "/dist/murolinks.sqlite3",
-          //url: "https://archive.org/download/murolinks/murolinks.sqlite3",
+          //url: "/dist/murolinks.sqlite3",
+          url: "https://archive.org/download/murolinks/murolinks.sqlite3",
           requestChunkSize: 1024,
         },
       },
