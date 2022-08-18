@@ -1,13 +1,13 @@
 import { createDbWorker, WorkerHttpvfs } from "sql.js-httpvfs";
 
 const archivedBase = "http://web.archive.org/web/20220412011008/https://murobbs.muropaketti.com/";
-
 const workerUrl = new URL(
   "sql.js-httpvfs/dist/sqlite.worker.js",
   import.meta.url
 );
 const wasmUrl = new URL("sql.js-httpvfs/dist/sql-wasm.wasm", import.meta.url);
 const postre = /(\d+)$/;
+declare var DB_URL: string;
 
 async function loadWorker(): Promise<WorkerHttpvfs> {
   return createDbWorker(
@@ -16,8 +16,7 @@ async function loadWorker(): Promise<WorkerHttpvfs> {
         from: "inline",
         config: {
           serverMode: "full",
-          //url: "/dist/murolinks.sqlite3",
-          url: "https://archive.org/download/murolinks/murolinks.sqlite3",
+          url: DB_URL,
           requestChunkSize: 1024,
         },
       },

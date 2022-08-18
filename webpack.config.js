@@ -1,3 +1,5 @@
+const webpack = require('webpack');
+
 module.exports = {
   entry: "./src/index.ts",
   module: {
@@ -15,10 +17,10 @@ module.exports = {
   output: {
     filename: "bundle.js",
   },
-  devServer: {
-    publicPath: "/dist",
-    headers: {
-      "Access-Control-Allow-Origin": "*",
-    },
-  },
+
+  plugins: [
+    new webpack.EnvironmentPlugin([
+      'NODE_ENV',
+    ]),
+  ],
 };

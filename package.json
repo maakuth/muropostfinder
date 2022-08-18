@@ -7,6 +7,13 @@
     "webpack-cli": "^4.10.0"
   },
   "dependencies": {
-    "sql.js-httpvfs": "^0.8.11"
+    "sql.js-httpvfs": "^0.8.11",
+    "webpack-dev-server": "^4.10.0",
+    "webpack-merge": "^5.8.0"
+  },
+  "scripts": {
+    "build": "NODE_ENV=production webpack --config prod.config.js",
+    "start": "NODE_ENV=development webpack-dev-server --config dev.config.js",
+    "deploy": "npm run build"
   }
 }
