@@ -12,8 +12,8 @@
     "webpack-merge": "^5.8.0"
   },
   "scripts": {
-    "build": "NODE_ENV=production webpack --config prod.config.js",
-    "start": "NODE_ENV=development webpack-dev-server --config dev.config.js",
+    "build": "NODE_ENV=production webpack --config webpack/prod.config.js",
+    "start": "NODE_ENV=development webpack-dev-server --config webpack/dev.config.js",
     "deploy": "npm run build"
   }
 }
