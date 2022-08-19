@@ -12,3 +12,7 @@ h1 {
 #search {
     width: 25em;
 }
+
+#results {
+    padding-top: 2em;
+}
