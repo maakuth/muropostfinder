@@ -1,0 +1,14 @@
+body {
+    padding: 3em;
+    background-color: antiquewhite;
+}
+
+h1 {
+    border: 0px;
+    border-bottom: 1px;
+    border-style: dotted;
+}
+
+#search {
+    width: 25em;
+}
