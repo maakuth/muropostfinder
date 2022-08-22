@@ -17,7 +17,7 @@ module.exports = {
   output: {
     filename: "bundle.js",
   },
-
+  target: ['web', 'es8'],
   plugins: [
     new webpack.EnvironmentPlugin([
       'NODE_ENV',

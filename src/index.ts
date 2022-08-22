@@ -68,7 +68,7 @@ const workerUrl = new URL(
     });
 
     document.addEventListener('keyup', function(event) {
-      if (event.keyCode === 13) {
+      if (event.key === 'Enter') {
         document.getElementById("searchButton")?.click();
       }
     })
