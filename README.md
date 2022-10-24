@@ -1,5 +1,5 @@
 # muropostfinder
-Find [MuroBBS](https://fi.wikipedia.org/wiki/Muropaketti#MuroBBS) posts from Internet Archive. You can use it via the [Internet Archive item](https://ia601401.us.archive.org/32/items/murolinks/index.html).
+Find [MuroBBS](https://fi.wikipedia.org/wiki/Muropaketti#MuroBBS) posts from Internet Archive. You can use it via the [Internet Archive item](https://archive.org/download/murolinks/index.html).
 The very first row in the database has postid 1706505145, so you can start with that.
 
 The search works by either inputting the postid to the text field and pressing the button (or Return), or setting the postid to the url hash (adding #12345 to the end of the url).
