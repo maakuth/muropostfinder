@@ -6,7 +6,7 @@ const workerUrl = new URL(
   import.meta.url
   );
   const wasmUrl = new URL("sql.js-httpvfs/dist/sql-wasm.wasm", import.meta.url);
-  const postre = /(\d+)$/;
+  const postre = /(\d+)/;
   declare var DB_URL: string;
   
   async function loadWorker(): Promise<WorkerHttpvfs> {
@@ -54,16 +54,22 @@ const workerUrl = new URL(
       return archivedBase + threadurl;
     }
     
+    function search(fromButton: boolean): void {      
+      const searchfield = document.getElementById("search") as HTMLTextAreaElement;
+      if (fromButton) document.location.hash = searchfield.value;
+      else searchfield.value = document.location.hash;
+      let post = postre.exec(document.location.hash)
+      if (post) {
+        thread_from_postid(worker, parseInt(post[0])).then((result) => {
+          showResult(result);
+        });
+      }
+    }
+
     let worker = loadWorker();
     document.addEventListener("DOMContentLoaded", (event: Event) => {
       document.getElementById("searchButton")?.addEventListener("click", (event: Event) => {
-        const searchfield = document.getElementById("search") as HTMLTextAreaElement;
-        let post = postre.exec(searchfield.value)
-        if (post) {
-          thread_from_postid(worker, parseInt(post[0])).then((result) => {
-            showResult(result);
-          });
-        }
+        search(true); 
       });
     });
 
@@ -71,6 +77,8 @@ const workerUrl = new URL(
       if (event.key === 'Enter') {
         document.getElementById("searchButton")?.click();
       }
+    });
+
+    window.addEventListener("hashchange", function() {
+      search(false);
     })
-    
-    
