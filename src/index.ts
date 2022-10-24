@@ -26,7 +26,7 @@ const workerUrl = new URL(
       );
     }
     
-    async function thread_from_postid(worker: Promise<WorkerHttpvfs>, postid: number): Promise<String> {
+    async function thread_from_postid(worker: Promise<WorkerHttpvfs>, postid: number): Promise<string> {
       const _worker = await worker
       const result = await _worker.db.query('select threadurl from muro where postid = ' + postid + ' limit 1') as unknown as Array<{[key: string]: string}>;  
       if (result.length == 0) { 
@@ -37,7 +37,7 @@ const workerUrl = new URL(
       }
     }
     
-    function showResult(result: String): void {
+    function showResult(result: string): void {
       const resultElement = document.getElementById("results");
       const url = archiveUrl(result);
       if (resultElement) {
@@ -50,20 +50,28 @@ const workerUrl = new URL(
       }
     }
     
-    function archiveUrl(threadurl: String): String {
+    function archiveUrl(threadurl: string): string {
       return archivedBase + threadurl;
+    }
+
+    function redirect(url: string): void {
+      document.body.innerHTML = "<h1>Redirecting to result...</h1>";
+      window.location.href = url;
     }
     
     function search(fromButton: boolean): void {      
       const searchfield = document.getElementById("search") as HTMLTextAreaElement;
-      if (fromButton) document.location.hash = searchfield.value;
-      else searchfield.value = document.location.hash;
       let post = postre.exec(document.location.hash)
-      if (post) {
-        thread_from_postid(worker, parseInt(post[0])).then((result) => {
-          showResult(result);
-        });
-      }
+      if (post == null) return;
+      if (fromButton) document.location.hash = searchfield.value;
+      else searchfield.value = post[0];
+
+      thread_from_postid(worker, parseInt(post[0])).then((result) => {
+        showResult(result);
+        if (location.hash.match(/redirect/) && result != "") {
+          redirect(archiveUrl(result));
+        }
+      });
     }
 
     let worker = loadWorker();
@@ -71,6 +79,9 @@ const workerUrl = new URL(
       document.getElementById("searchButton")?.addEventListener("click", (event: Event) => {
         search(true); 
       });
+
+      const searchfield = document.getElementById("search") as HTMLTextAreaElement;
+      if (searchfield.value != "") search(true);
     });
 
     document.addEventListener('keyup', function(event) {

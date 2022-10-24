@@ -4,6 +4,8 @@ The very first row in the database has postid 1706505145, so you can start with 
 
 The search works by either inputting the postid to the text field and pressing the button (or Return), or setting the postid to the url hash (adding #12345 to the end of the url).
 
+If you want to make a bookmarklet or something to find the threads directly, you can add #redirect after your postid in the url and you'll be redirected to the result directly.
+
 ## What?
 This is a backendless search engine that allows finding archived
 [MuroBBS](http://web.archive.org/web/20220412011008/https://murobbs.muropaketti.com/)
