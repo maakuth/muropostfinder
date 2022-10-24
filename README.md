@@ -14,3 +14,16 @@ MuroBBS was grabbed to the Internet Archive during its last week online and made
 This grab apparently succeeded in grabbing all the thread pages, but the post urls didn't make it.
 However, the post urls were just redirects to thread pages and the post ids are in the pages.
 So, I made an sqlite database out of the postid - threadid mappings and then this tool to search them.
+
+## Reuse
+At the current state this tool is not very well finished toolkit for creating new search sites like the one I made.
+It should be possible though.
+If you use it for your own projects, it would be fun to learn about it.
+If you refine it for better reusability, please make a PR.
+
+## Howto reuse
+1. Find the links you want to include in the search
+1. Add them to a sqlite3 database. See [the example script](add-to-database-example.py) for an example of that.
+1. Fork this repository, and change MuroBBS references to your own, remember to update the configuration to match your sqlite3 database!
+1. Build with `npm run build` and copy the contents of dist/ and public/ to your hosting provider
+1. That's it!
